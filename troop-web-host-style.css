@@ -12,3 +12,7 @@ body {
 .navicon {
     background-color: #266f53;   
 }
+
+.page-title {
+    display: none;
+}
