@@ -1,9 +1,9 @@
 ##  Badges of Rank
-Life Scout Rank — Maddox M, Samuel W
-
 Second Class Rank — Jasper M
 
 Star Scout Rank — Owen M
+
+Life Scout Rank — Maddox M, Samuel W
 
 Eagle Rank — Matthew F
 
