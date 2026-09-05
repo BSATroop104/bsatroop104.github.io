@@ -22,6 +22,12 @@
 		.rank h4 { margin-bottom: .35rem; }
 		.rank p { font-size: .9em; line-height: 1.45; margin: 0; }
 		.section-intro { margin-bottom: 1.25rem; }
+		.merit-badge-search { margin-bottom: 1.25rem; }
+		.merit-badge-search label { display: block; font-weight: 700; margin-bottom: .35rem; }
+		.merit-badge-search input { margin-bottom: 0; }
+		.merit-badge-status { margin: 1rem 0 0; }
+		.merit-badge-status[hidden] { display: none; }
+		.award mark { background: #fff0a8; padding: 0 .1em; }
 		@media screen and (max-width: 736px) { .award-list, .rank-list { grid-template-columns: 1fr; } }
 		@media print { #header { display: none; } #wrapper { padding-left: 0; } .award, .rank { break-inside: avoid; } }
 	</style>
@@ -63,6 +69,11 @@
 		<section id="merit-badges"><div class="container">
 			<header class="major"><h2>Merit Badge Awards</h2></header>
 			<p class="section-intro">Congratulations to the Scouts who completed these merit badges.</p>
+			<div class="merit-badge-search">
+				<label for="merit-badge-scout-search">Filter by Scout</label>
+				<input type="search" id="merit-badge-scout-search" placeholder="Enter Scout name" autocomplete="off" />
+			</div>
+			<p id="merit-badge-status" class="merit-badge-status" role="status" aria-live="polite" hidden></p>
 			<div id="merit-badge-list" class="award-list"></div>
 		</div></section>
 
@@ -113,7 +124,37 @@
 		];
 		const badgeSlug = name => name.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 		const badgeUrl = name => '../../images/bsa-logos/merit-badges/' + badgeSlug(name) + '.png';
-		document.querySelector('#merit-badge-list').innerHTML = meritBadges.map(([name, recipients]) => '<article class="award"><img class="award-art" src="' + badgeUrl(name) + '" alt="' + name + ' merit badge" /><div><h4>' + name + '</h4><p>' + recipients + '</p></div></article>').join('');
+		const badgeList = document.querySelector('#merit-badge-list');
+		const scoutSearch = document.querySelector('#merit-badge-scout-search');
+		const badgeStatus = document.querySelector('#merit-badge-status');
+		const escapeHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
+		const highlightMatches = (value, query) => {
+			if (!query) return escapeHtml(value);
+			const matcher = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+			let highlighted = '';
+			let lastIndex = 0;
+			value.replace(matcher, (match, offset) => {
+				highlighted += escapeHtml(value.slice(lastIndex, offset)) + '<mark>' + escapeHtml(match) + '</mark>';
+				lastIndex = offset + match.length;
+				return match;
+			});
+			return highlighted + escapeHtml(value.slice(lastIndex));
+		};
+		const renderMeritBadges = () => {
+			const query = scoutSearch.value.trim();
+			const normalizedQuery = query.toLowerCase();
+			const filteredBadges = normalizedQuery.length < 2
+				? meritBadges
+				: meritBadges.filter(([, recipients]) => recipients.toLowerCase().includes(normalizedQuery));
+			badgeList.innerHTML = filteredBadges.map(([name, recipients]) => {
+				const highlightedRecipients = recipients.split(', ').map(scout => highlightMatches(scout, query)).join(', ');
+				return '<article class="award"><img class="award-art" src="' + badgeUrl(name) + '" alt="' + escapeHtml(name) + ' merit badge" /><div><h4>' + escapeHtml(name) + '</h4><p>' + highlightedRecipients + '</p></div></article>';
+			}).join('');
+			badgeStatus.hidden = normalizedQuery.length < 2 || filteredBadges.length > 0;
+			badgeStatus.textContent = 'No matching merit badges.';
+		};
+		scoutSearch.addEventListener('input', renderMeritBadges);
+		renderMeritBadges();
 	</script>
 </body>
 </html>
