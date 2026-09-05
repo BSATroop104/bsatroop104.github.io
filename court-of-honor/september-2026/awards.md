@@ -117,4 +117,4 @@ Scouts BSA National Outdoor Award — Aiden B, Jarrod S, Matthew F, Theodore H, 
 
 Summer Camp Attendees
 
-Triple Crown of National High Adventure — TBD
+Triple Crown of National High Adventure — Aiden B, Ethan M, Trigg D, Mr. Beaver
