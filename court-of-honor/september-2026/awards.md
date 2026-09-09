@@ -44,7 +44,7 @@ Engineering — Jarrod S
 
 Entrepreneurship — Jonas B, Mc S
 
-Family Life — Aiden B
+Family Life — Aiden B, Gregory S
 
 Fingerprinting — Heath B
 
@@ -76,7 +76,7 @@ Nuclear Science — Andrew L, Brandon S, Mc S, Townes B, Wilder J
 
 Personal Fitness — Maddox M
 
-Personal Management — Evan H
+Personal Management — Evan H, Brandon S
 
 Public Speaking — Brandon S, Ethan M, Townes B
 
