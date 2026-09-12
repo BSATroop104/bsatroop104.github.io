@@ -116,5 +116,3 @@ Northern Tier Lake Monitoring Program — Aiden B, Ethan M, Joel C, Matthew F, Q
 Scouts BSA National Outdoor Award — Aiden B, Jarrod S, Matthew F, Theodore H, Will B
 
 Summer Camp Attendees
-
-Triple Crown of National High Adventure — Aiden B, Ethan M, Trigg D, Mr. Beaver
